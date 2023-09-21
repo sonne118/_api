@@ -56,7 +56,7 @@ public class JsonMiddleware
 		if (streamJson.CanRead)
 		root = await System.Text.Json.JsonSerializer.DeserializeAsync<Root>(streamJson, options);
 		
-		var json = JsonConvert.SerializeObject(root ?? new Root());
+		var json = System.Text.Json.JsonSerializer.Serialize(root ?? new Root());		
 		await context.Response.WriteAsync(json);
 	}	
 }
