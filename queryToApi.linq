@@ -42,7 +42,7 @@ public class TerminalMiddleware
 	{
 	}
 
-	public async Task Invoke(HttpContext context, ILogger<TerminalMiddleware> log)
+	public async Task Invoke(HttpContext context)
 	{
 		Root root = null;
 		var options = new JsonSerializerOptions
