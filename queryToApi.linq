@@ -30,15 +30,15 @@ builder.Services.AddHttpClient<IJsonReader,JsonReader>();
 
 var app = builder.Build();
 
-app.UseMiddleware(typeof(TerminalMiddleware));
+app.UseMiddleware(typeof(JsonMiddleware));
 
 app.Run();
 
-public class TerminalMiddleware
+public class JsonMiddleware
 {
 	DateTime _date = DateTime.Now;
 
-	public TerminalMiddleware(RequestDelegate next)
+	public JsonMiddleware(RequestDelegate next)
 	{
 	}
 
