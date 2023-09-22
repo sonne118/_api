@@ -51,12 +51,11 @@ public class TerminalMiddleware
 		};
 
 		var getService = context.RequestServices.GetRequiredService<IHttpClientFactory>();
-
 		var httpClient = getService.CreateClient();
 
-
 		var streamJson = await httpClient.GetStreamAsync("https://myfakeapi.com/api/users/");
-		
+
+		if (streamJson.CanRead)
 		root = await System.Text.Json.JsonSerializer.DeserializeAsync<Root>(streamJson, options);
 
 		var json = System.Text.Json.JsonSerializer.Serialize(root ?? new Root());
