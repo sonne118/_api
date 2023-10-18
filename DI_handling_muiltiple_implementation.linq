@@ -1,11 +1,16 @@
 var builder = WebApplication.CreateBuilder();
-
-
 builder.Services.AddControllersWithViews().AddApplicationPart(typeof(HomeController).Assembly);
 
 builder.Services.AddScoped<OneService>();
 builder.Services.AddScoped<SecondService>();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+	c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+});
 
 builder.Services.AddScoped<StrategyService>(provider => (type) =>
 {
@@ -17,8 +22,13 @@ builder.Services.AddScoped<StrategyService>(provider => (type) =>
 	};
 });
 
+
+
 var app = builder.Build();
 app.MapDefaultControllerRoute();
+
+app.UseSwagger();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1")); //https://localhost:5001/swagger/Index.html
 app.Run();
 
 public delegate ISomeService StrategyService(SomeType type);
@@ -39,7 +49,7 @@ public class HomeController : Controller
 	[HttpGet("One")]
 	public ActionResult Index()
 	{
-		var oneService = _service.Invoke(SomeType.One);	
+		var oneService = _service.Invoke(SomeType.One);
 		return new ContentResult
 		{
 			Content = oneService.Do()
