@@ -17,7 +17,6 @@ builder.Services.AddScoped<StrategyService>(provider => (type) =>
 	};
 });
 
-
 var app = builder.Build();
 app.MapDefaultControllerRoute();
 app.Run();
@@ -28,7 +27,6 @@ public enum SomeType
 	One,
 	Second
 }
-
 
 public class HomeController : Controller
 {
@@ -58,7 +56,6 @@ public class HomeController : Controller
 		};
 	}
 }
-
 
 public interface ISomeService
 {
